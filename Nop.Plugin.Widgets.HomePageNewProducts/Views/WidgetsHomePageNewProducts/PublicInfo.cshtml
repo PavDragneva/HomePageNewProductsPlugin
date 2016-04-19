@@ -1,0 +1,45 @@
+﻿@using Nop.Web.Framework.UI
+
+@model IEnumerable<Nop.Plugin.Widgets.HomePageNewProducts.Models.LatestProductModel>
+@{
+    Layout = "";
+}
+
+@{
+    Html.AddCssFileParts("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css");
+    Html.AddScriptParts("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js");
+}
+<div class="title">
+    <h2>Latest products</h2>
+</div>
+<hr />
+@{
+    int counter = 0;
+}
+<div class="row">
+    @foreach (var product in Model)
+    {
+        counter += 1;
+        <div class="col-md-3">
+            <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })">
+                <img src="data:image/png;base64,@System.Convert.ToBase64String(product.Picture.Picture.PictureBinary)" alt=@product.Name class="img-responsive" />
+                </a>
+                <br />
+                <h5><a href="@Url.RouteUrl("Product", new { SeName = product.SeName })">@product.Name</a></h5>
+                <br />
+                <div class="text-justify">
+                    @product.ShortDescription
+                </div>
+</div>
+        if (counter == 4)
+        {
+            counter = 0;
+            <div class="clearfix"></div>
+            <br />
+            <br />
+            <br />
+        }
+    }
+</div>
+<br />
+<br />
